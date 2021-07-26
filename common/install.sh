@@ -5,7 +5,7 @@ spark="Spark vFlare"
 #download and install based on rom detection
 Install() {
   mkdir $MODPATH/temp
-  wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof/releases/download/v3/$rom.zip
+  wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom.zip
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
   cp -R $MODPATH/temp/system $MODPATH
 }
