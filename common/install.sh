@@ -12,10 +12,12 @@ if [[ $? = 0 ]]; then
       cp -R $MODPATH/temp/xtended/system $MODPATH
     else
       echo "You are using an unsupported rom"
+      exit 1
     fi
   fi
 else
   echo "This module is only for sofiar"
+  exit 1
 fi
 #post install cleanup
 rm -rf $MODPATH/temp
