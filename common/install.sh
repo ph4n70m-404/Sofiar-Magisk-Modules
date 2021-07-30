@@ -1,20 +1,25 @@
-evo="Evolution X 5.9"
-xtended="MSM Xtended XR 7.0"
-bliss="Bliss 14.5"
-spark="Spark vFlare"
+#Rom version code variables
+EvoVersion="5.9"
+XtendedVersion="7.0"
+BlissVersion="14.5"
+SparkVersion="vFlare"
+#generic variables
+evo="Evolution X $EvoVersion"
+xtended="MSM Xtended XR $XtendedVersion"
+bliss="Bliss $BlissVersion"
+spark="Spark $SparkVersion"
 configfolder=/sdcard/sigspoof/
 #download and install files needed
-
 Install() {
-  if [ -e "$configfolder/$rom" ]; then
+  if [ -e "$MODPATH/temp/$rom" ]; then
+    echo "Files needed found"
+  elif [ -e "$configfolder/$rom" ]; then
     echo "Files needed found"
     mkdir -p $MODPATH/temp
     cp -R /$configfolder/$rom /$MODPATH/temp
-  elif [ -e "$MODPATH/temp/$rom" ]; then
-    echo "Files needed found"
   else
     echo "Downloading files needed"
-    mkdir $MODPATH/temp
+    mkdir -p $MODPATH/temp
     wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom
   fi
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
@@ -25,25 +30,25 @@ RomCheck() {
   grep -q "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
   if [[ $? = 0 ]]; then
     echo "Installing for $evo"
-    export rom="evolution-x.zip"
+    export rom="evolution-x-$EvoVersion.zip"
     Install
   else
     grep -q "ro.build.flavor=xtended_sofiar-eng" /system/build.prop
     if [[ $? = 0 ]]; then
       echo "Installing for $xtended"
-      export rom="msm-xtended-xr.zip"
+      export rom="msm-xtended-xr-$XtendedVersion.zip"
       Install
     else
       grep -q "ro.build.flavor=bliss_sofiar-userdebug" /system/build.prop
       if [[ $? = 0 ]]; then
         echo "Installing for $bliss"
-        export rom="bliss-os.zip"
+        export rom="bliss-os-$BlissVersion.zip"
         Install
       else
-        grep -q "ro.build.flavor=spark_sofiar-userdebug" /system/build.prop
+        grep -q "ro.spark.version=Spark-$SparkVersion-sofiar" /system/build.prop
         if [[ $? = 0 ]]; then
           echo "Installing for $spark"
-          export rom="spark-os.zip"
+          export rom="spark-os-$SparkVersion.zip"
           Install
         else
           echo "You are using an unsupported rom"
@@ -56,7 +61,7 @@ RomCheck() {
 #check for test zip then set the rom to the test zip
 DebugMode() {
   if [ -e "$configfolder/test.zip" ]; then
-    echo "Installing test"
+    echo "Installing test zip"
     export rom="test.zip"
     Install
   else
@@ -75,7 +80,7 @@ if [[ $? = 0 ]]; then
     RomCheck
   fi
 else
-  echo "This module is only for sofiar"
+  echo "This magisk module is only for sofiar"
   exit 1
 fi
 #post install cleanup
