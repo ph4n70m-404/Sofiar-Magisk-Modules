@@ -3,11 +3,6 @@ EvoVersion="5.9"
 XtendedVersion="7.0"
 BlissVersion="14.5"
 SparkVersion="vFlare"
-#generic variables
-evo="Evolution X $EvoVersion"
-xtended="MSM Xtended XR $XtendedVersion"
-bliss="Bliss $BlissVersion"
-spark="Spark $SparkVersion"
 configfolder=/sdcard/sigspoof/
 #download and install files needed
 Install() {
@@ -29,26 +24,26 @@ Install() {
 RomCheck() {
   grep -q "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
   if [[ $? = 0 ]]; then
-    echo "Installing for $evo"
+    echo "Installing for Evolution X $EvoVersion"
     export rom="evolution-x-$EvoVersion.zip"
     Install
   else
     grep -q "ro.build.flavor=xtended_sofiar-eng" /system/build.prop
     if [[ $? = 0 ]]; then
-      echo "Installing for $xtended"
+      echo "Installing for MSM Xtended XR $XtendedVersion"
       export rom="msm-xtended-xr-$XtendedVersion.zip"
       Install
     else
       grep -q "ro.build.flavor=bliss_sofiar-userdebug" /system/build.prop
       if [[ $? = 0 ]]; then
-        echo "Installing for $bliss"
-        export rom="bliss-os-$BlissVersion.zip"
+        echo "Installing for Bliss $BlissVersion"
+        export rom="bliss-$BlissVersion.zip"
         Install
       else
         grep -q "ro.spark.version=Spark-$SparkVersion-sofiar" /system/build.prop
         if [[ $? = 0 ]]; then
-          echo "Installing for $spark"
-          export rom="spark-os-$SparkVersion.zip"
+          echo "Installing for Spark $SparkVersion"
+          export rom="spark-$SparkVersion.zip"
           Install
         else
           echo "You are using an unsupported rom"
