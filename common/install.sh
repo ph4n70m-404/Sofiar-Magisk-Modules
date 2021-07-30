@@ -2,16 +2,21 @@ evo="Evolution X 5.9"
 xtended="MSM Xtended XR 7.0"
 bliss="Bliss 14.5"
 spark="Spark vFlare"
-#download and install based on rom detection
+configfolder=/sdcard/sigspoof/
+#download and install files needed
 Install() {
-  mkdir $MODPATH/temp
-  wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom.zip
+  if [ -e "$MODPATH/temp/$rom.zip" ]; then
+    echo "Files needed found"
+  else
+    echo "Downloading files needed"
+    mkdir $MODPATH/temp
+    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom.zip
+  fi
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
   cp -R $MODPATH/temp/system $MODPATH
 }
-#make sure that the device is sofiar and detect therom
-grep -q "ro.product.system.device=sofiar" /system/build.prop
-if [[ $? = 0 ]]; then
+#check for the rom
+RomCheck() {
   grep -q "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
   if [[ $? = 0 ]]; then
     echo "Installing for $evo"
@@ -41,6 +46,30 @@ if [[ $? = 0 ]]; then
         fi
       fi
     fi
+  fi
+}
+#check for test zip then set the rom to the test zip
+DebugMode() {
+  if [ -e "$configfolder/test.zip" ]; then
+    echo "Installing test"
+    mkdir $MODPATH/temp
+    cp -R /$configfolder/test.zip /$MODPATH/temp
+    export rom="test"
+    Install
+  else
+    echo "No proper debug paramaters set, continuing with normal install"
+    RomCheck
+  fi
+}
+#make sure that the device is sofiar
+grep -q "ro.product.system.device=sofiar" /system/build.prop
+if [[ $? = 0 ]]; then
+  #look for debug file
+  if [ -f "$configfolder/debug.txt" ]; then
+    echo "Debug mode enabled"
+    DebugMode
+  else
+    RomCheck
   fi
 else
   echo "This module is only for sofiar"
