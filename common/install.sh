@@ -4,13 +4,18 @@ bliss="Bliss 14.5"
 spark="Spark vFlare"
 configfolder=/sdcard/sigspoof/
 #download and install files needed
+
 Install() {
-  if [ -e "$MODPATH/temp/$rom.zip" ]; then
+  if [ -e "$configfolder/$rom" ]; then
+    echo "Files needed found"
+    mkdir -p $MODPATH/temp
+    cp -R /$configfolder/$rom /$MODPATH/temp
+  elif [ -e "$MODPATH/temp/$rom" ]; then
     echo "Files needed found"
   else
     echo "Downloading files needed"
     mkdir $MODPATH/temp
-    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom.zip
+    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof-Files/releases/download/1/$rom
   fi
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
   cp -R $MODPATH/temp/system $MODPATH
@@ -20,25 +25,25 @@ RomCheck() {
   grep -q "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
   if [[ $? = 0 ]]; then
     echo "Installing for $evo"
-    export rom="evolution-x"
+    export rom="evolution-x.zip"
     Install
   else
     grep -q "ro.build.flavor=xtended_sofiar-eng" /system/build.prop
     if [[ $? = 0 ]]; then
       echo "Installing for $xtended"
-      export rom="msm-xtended-xr"
+      export rom="msm-xtended-xr.zip"
       Install
     else
       grep -q "ro.build.flavor=bliss_sofiar-userdebug" /system/build.prop
       if [[ $? = 0 ]]; then
         echo "Installing for $bliss"
-        export rom="bliss-os"
+        export rom="bliss-os.zip"
         Install
       else
         grep -q "ro.build.flavor=spark_sofiar-userdebug" /system/build.prop
         if [[ $? = 0 ]]; then
           echo "Installing for $spark"
-          export rom="spark-os"
+          export rom="spark-os.zip"
           Install
         else
           echo "You are using an unsupported rom"
@@ -52,9 +57,7 @@ RomCheck() {
 DebugMode() {
   if [ -e "$configfolder/test.zip" ]; then
     echo "Installing test"
-    mkdir $MODPATH/temp
-    cp -R /$configfolder/test.zip /$MODPATH/temp
-    export rom="test"
+    export rom="test.zip"
     Install
   else
     echo "No proper debug paramaters set, continuing with normal install"
