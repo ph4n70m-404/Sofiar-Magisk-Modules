@@ -60,7 +60,7 @@ DebugMode() {
     export rom="test.zip"
     Install
   else
-    echo "No proper debug paramaters set, continuing with normal install"
+    echo "No test zip found, continuing with normal install"
     RomCheck
   fi
 }
