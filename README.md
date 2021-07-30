@@ -16,13 +16,13 @@ Debug mode is intended to be used to test the precompiled spoofing patches on a 
 
 # Changelog
 - **v4**  
-cleaned up the code  
-added debug mode  
-changed where it downloads from  
-added offline installer stuff  
-started on version checking  
-offline installer for archival and support for older versions added  
-what versions the offline installer supports is now the release page  
+Cleaned up the code  
+Added debug mode  
+Changed where it downloads from  
+Added offline installer stuff  
+Started on version checking  
+Offline installer for archival and support for older versions added  
+What versions the offline installer supports is now the release page  
 - **v3**  
 Cleaned up the code  
 Made it an online installer so its a smaller download  
