@@ -2,48 +2,48 @@
 EvoVersion="5.9"
 XtendedVersion="7.0"
 BlissVersion="14.5"
-SparkVersion="vFlare"
+SparkVersion="vflare"
 configfolder=/sdcard/sigspoof/
 #download and install files needed
 Install() {
-  if [ -e "$MODPATH/temp/$rom" ]; then
+  if [ -e "$MODPATH/temp/$rom.zip" ]; then
     echo "Files needed found"
-  elif [ -e "$configfolder/$rom" ]; then
+  elif [ -e "$configfolder/$rom.zip" ]; then
     echo "Files needed found"
     mkdir -p $MODPATH/temp
-    cp -R /$configfolder/$rom /$MODPATH/temp
+    cp -R /$configfolder/$rom.zip /$MODPATH/temp
   else
     echo "Downloading files needed"
     mkdir -p $MODPATH/temp
-    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof/raw/main/temp/$rom
+    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof/raw/main/temp/$rom.zip
   fi
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
   cp -R $MODPATH/temp/system $MODPATH
 }
 #check for the rom
 RomCheck() {
-  grep -q "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
+  grep -iq "ro.build.flavor=evolution_sofiar-userdebug" /system/build.prop
   if [[ $? = 0 ]]; then
     echo "Installing for Evolution X $EvoVersion"
-    export rom="evolution-x-$EvoVersion.zip"
+    export rom="evolution-x-$EvoVersion"
     Install
   else
-    grep -q "ro.build.flavor=xtended_sofiar-eng" /system/build.prop
+    grep -iq "ro.build.flavor=xtended_sofiar-eng" /system/build.prop
     if [[ $? = 0 ]]; then
       echo "Installing for MSM Xtended XR $XtendedVersion"
-      export rom="msm-xtended-xr-$XtendedVersion.zip"
+      export rom="msm-xtended-xr-$XtendedVersion"
       Install
     else
-      grep -q "ro.build.flavor=bliss_sofiar-userdebug" /system/build.prop
+      grep -iq "ro.build.flavor=bliss_sofiar-userdebug" /system/build.prop
       if [[ $? = 0 ]]; then
         echo "Installing for Bliss $BlissVersion"
-        export rom="bliss-$BlissVersion.zip"
+        export rom="bliss-$BlissVersion"
         Install
       else
-        grep -q "ro.spark.version=Spark-$SparkVersion-sofiar" /system/build.prop
+        grep -iq "ro.spark.version=Spark-$SparkVersion-sofiar" /system/build.prop
         if [[ $? = 0 ]]; then
           echo "Installing for Spark $SparkVersion"
-          export rom="spark-$SparkVersion.zip"
+          export rom="spark-$SparkVersion"
           Install
         else
           echo "You are using an unsupported rom"
@@ -57,7 +57,7 @@ RomCheck() {
 DebugMode() {
   if [ -e "$configfolder/test.zip" ]; then
     echo "Installing test zip"
-    export rom="test.zip"
+    export rom="test"
     Install
   else
     echo "No test zip found, continuing with normal install"
@@ -65,7 +65,7 @@ DebugMode() {
   fi
 }
 #make sure that the device is sofiar
-grep -q "ro.product.system.device=sofiar" /system/build.prop
+grep -iq "ro.product.system.device=sofiar" /system/build.prop
 if [[ $? = 0 ]]; then
   #look for debug file
   if [ -f "$configfolder/debug.txt" ]; then
