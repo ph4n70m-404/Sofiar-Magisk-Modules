@@ -2,6 +2,11 @@
 Curently only works on MSM Xtended XR 7.0, Evolution X 5.9, Bliss 14.5, and Spark vFlare.   
 Might take requests on what roms to add support for.
 
+# Downloading 
+You can find the latest version [here](https://github.com/ph4n70m-404/Sofiar-Magisk-Modules/releases/tag/Sigspoof-v4).  
+The offline installer currently supports Evolution X 5.9, MSM Xtended XR 7.0, Bliss 14.5, and Spark vFlare.  
+The online installer is currently broken.  
+
 # Installation
 To install you can:
 - use the online installer normally
