@@ -15,7 +15,7 @@ Install() {
   else
     echo "Downloading files needed"
     mkdir -p $MODPATH/temp
-    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-SigSpoof/raw/main/temp/$rom.zip
+    wget -P $MODPATH/temp https://github.com/ph4n70m-404/Sofiar-Magisk-Modules/raw/main/Sofiar-Sigspoof/temp/$rom.zip
   fi
   unzip -qq -d $MODPATH/temp $MODPATH/temp/$rom
   cp -R $MODPATH/temp/system $MODPATH
