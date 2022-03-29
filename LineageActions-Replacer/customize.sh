@@ -36,6 +36,10 @@ REPLACE_EXAMPLE="
 REPLACE="
 /system/app/LineageActions
 /system/priv-app/LineageActions
+/system/system_ext/app/LineageActions
+/system/app/MotoActions
+/system/priv-app/MotoActions
+/system/system_ext/app/MotoActions
 "
 
 ##########################################################################################
